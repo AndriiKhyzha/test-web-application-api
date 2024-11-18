@@ -4,9 +4,9 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.lime.it</groupId>
+	<groupId>com.test.web.application.api</groupId>
 	<artifactId>test-web-application-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.0</version>
 
 	<name>test-web-application-api</name>
 	<description>Demo project for Spring Boot</description>
@@ -57,16 +57,14 @@
 						</goals>
 						<configuration>
 							<inputSpec>
-								${project.basedir}/src/main/resources/test-api.yml
+								${project.basedir}/src/main/resources/customer-api.yml
 							</inputSpec>
 							<generatorName>spring</generatorName>
-							<apiPackage>com.lime.it.test.web.application.openapi.api</apiPackage>
-							<modelPackage>com.lime.it.test.web.application.model</modelPackage>
-							<supportingFilesToGenerate>
-								ApiUtil.java
-							</supportingFilesToGenerate>
+							<apiPackage>com.customer.handling.service.api</apiPackage>
+							<modelPackage>com.customer.handling.service.api.model</modelPackage>
+							<invokerPackage>com.test.web.application.api.invoker</invokerPackage>
 							<configOptions>
-								<delegatePattern>true</delegatePattern>
+								<interfaceOnly>true</interfaceOnly>
 							</configOptions>
 						</configuration>
 					</execution>

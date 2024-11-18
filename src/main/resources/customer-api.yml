@@ -1,0 +1,349 @@
+openapi: "3.0.3"
+info:
+  title: Sample API
+  description: Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/) or HTML.
+  version: 0.1.0
+
+paths:
+  /customer:
+    post:
+      summary: Create customer
+      operationId: createCustomer
+      tags:
+        - customer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerData'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerData'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation exception
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/ErrorResponse'
+
+    put:
+      summary: Put Customer
+      operationId: updateCustomer
+      tags:
+        - customer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerData'
+      responses:
+        '201':
+          description: Update an existent customer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerData'
+        '204':
+          description: No content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Customer Id not found
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation exception
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/ErrorResponse'
+  /customer/{customerId}:
+    get:
+      summary: Get customer by Id
+      operationId: getCustomer
+      tags:
+        - customer
+      parameters:
+        - name: customerId
+          in: path
+          description: Status values that need to be considered for filter
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200': # status code
+          description: A JSON array of Customer by Id
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/CustomerData'
+        '400':
+          description: Invalid status value
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      tags:
+        - customer
+      summary: Deletes a customer
+      description: delete customer
+      operationId: deleteCustomer
+      parameters:
+        - name: customerId
+          in: path
+          description: Customer Id for delete
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid Customer value
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/ErrorResponse'
+
+  /address:
+    post:
+      summary: Create address
+      operationId: createAddress
+      tags:
+        - address
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddressData'
+      responses:
+        '201':
+          description: Created new Address
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddressData'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation exception
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/ErrorResponse'
+    put:
+      summary: Put Address
+      operationId: updateAddress
+      tags:
+        - address
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddressData'
+      responses:
+        '200':
+          description: Put address
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddressData'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Customer Id not found
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation exception
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/ErrorResponse'
+  /address/{addressId}:
+    get:
+      summary: Get address by Id
+      operationId: getAddress
+      tags:
+        - address
+      parameters:
+        - name: addressId
+          in: path
+          description: Status values that need to be considered for filter
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200': # status code
+          description: A JSON array of Address by Id
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/AddressData'
+        '400':
+          description: Invalid status value
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      tags:
+        - address
+      summary: Deletes a Address
+      description: delete address
+      operationId: deleteAddress
+      parameters:
+        - name: addressId
+          in: path
+          description: Address Id for delete
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid Address value
+
+components:
+  schemas:
+    AddressData:
+      type: object
+      required:
+        - dbId
+        - country
+        - city
+        - street
+        - number
+      properties:
+        dbId:
+          type: integer
+          format: int32
+          example: 10
+        country:
+          type: string
+          example: Ukraine
+        city:
+          type: string
+          example: Myrhorod
+        street:
+          type: string
+          example: Zinchashi
+        number:
+          type: string
+          example: 40
+
+    CustomerData:
+      type: object
+      required:
+        - dbId
+        - name
+        - address
+      properties:
+        dbId:
+          type: integer
+          format: int32
+          example: 33
+        name:
+          type: string
+          example: Tolya
+        address:
+          type: object
+          $ref: "#/components/schemas/AddressData"
+
+    ErrorResponse:
+      type: object
+      required:
+        - timestamp
+        - path
+        - detail
+        - errors
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          example: "2023-10-31T10:00:00Z"  # Add a proper example here
+        path:
+          type: string
+        detail:
+          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+
+    Error:
+      type: object
+      required:
+        - code
+        - detail
+      properties:
+        code:
+          type: string
+        detail:
+          type: string
